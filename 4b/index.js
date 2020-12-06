@@ -1,6 +1,8 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const app = express();
+
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json()); 
 
 app.set("view engine", "ejs");
 app.set("views", __dirname + "/views");
@@ -14,7 +16,6 @@ app.get('/form', (req, res) => {
 	res.render('form');					  
 });
 
-app.use(bodyParser.urlencoded({ extended: true }));
 app.post('/formdata', (req, res) => {
     res.render('formdata',{
         nickname:req.body.nickname,
@@ -23,7 +24,6 @@ app.post('/formdata', (req, res) => {
     });
 });
 
-app.use(express.json()); 
 app.post('/jsondata', (req, res) => {
     res.render('formdata',{
         nickname:req.body.nickname,
