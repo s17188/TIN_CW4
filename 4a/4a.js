@@ -1,49 +1,17 @@
 const http = require('http');
 const url = require('url');
 
-
-http.createServer(function (req, res) {
+http.createServer((req, res) => {
     let q = url.parse(req.url, true).query;
     if (q.first && q.second) {
         if (req.url.includes('/add?')) {
-
-            res.writeHead(200, {
-                'Content-Type': 'text/html'
-            });
-            let result = parseInt(q.first) + parseInt(q.second);
-            res.write(`<html><body><p>Pierwsza liczba: ${q.first}</p><p>Druga libcza: ${q.second}</p><p>Wynik: ${result}</p></body></html>`);
-            res.end();
-
+            showResult(q.first,q.second,parseInt(q.first) + parseInt(q.second),res)
         } else if (req.url.includes('/sub?')) {
-
-            res.writeHead(200, {
-                'Content-Type': 'text/html'
-            });
-            let result = parseInt(q.first) - parseInt(q.second);
-
-            res.write(`<html><body><p>Pierwsza liczba: ${q.first}</p><p>Druga libcza: ${q.second}</p><p>Wynik: ${result}</p></body></html>`);
-            res.end();
-
+            showResult(q.first,q.second,parseInt(q.first) - parseInt(q.second),res)
         } else if (req.url.includes('/mul?')) {
-
-            res.writeHead(200, {
-                'Content-Type': 'text/html'
-            });
-            let result = parseInt(q.first) * parseInt(q.second);
-
-            res.write(`<html><body><p>Pierwsza liczba: ${q.first}</p><p>Druga libcza: ${q.second}</p><p>Wynik: ${result}</p></body></html>`);
-            res.end();
-
+            showResult(q.first,q.second,parseInt(q.first) * parseInt(q.second),res)
         } else if (req.url.includes('/div?')) {
-
-            res.writeHead(200, {
-                'Content-Type': 'text/html'
-            });
-            let result = parseInt(q.first) / parseInt(q.second);
-
-            res.write(`<html><body><p>Pierwsza liczba: ${q.first}</p><p>Druga libcza: ${q.second}</p><p>Wynik: ${result}</p></body></html>`);
-            res.end();
-
+            showResult(q.first,q.second,parseInt(q.first) / parseInt(q.second),res)
         } else {
             res.writeHead(400, {
                 'Content-Type': 'text/html'
@@ -57,3 +25,11 @@ http.createServer(function (req, res) {
         res.end('Brak potrzebnych liczb do wykonania dzialania!');
     }
 }).listen(8080);
+
+const showResult = (first,second,result,res) => {
+    res.writeHead(200, {
+        'Content-Type': 'text/html'
+    });
+    res.write(`<html><body><p>Pierwsza liczba: ${first}</p><p>Druga libcza: ${second}</p><p>Wynik: ${result}</p></body></html>`);
+    res.end();
+}
